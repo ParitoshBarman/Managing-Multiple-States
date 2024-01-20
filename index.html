@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boilerplate Code</title>
+    <style>
+      /* style for the UI */
+      body{
+        background-color:rgb(31 27 34);
+        font-family: 'Courier New', Courier, monospace;
+      }
+      .displayarea{
+        border: 1px solid aqua;
+        max-width: 500px;
+        margin: auto;
+        border-radius: 8px;
+        font-size: 20px;
+        padding: 20px;
+      }
+      .scroBoardText{
+        text-align: center;
+        color: white;
+      }
+      p{
+        font-size: 20px;
+        color: antiquewhite;
+      }
+      button{
+        padding: 10px 20px;
+        font-size: 14px;
+        margin: 5px;
+        border-radius: 10px;
+      }
+      .buttons{
+        text-align: center;
+        
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Code goes here
+
+    // Score Board display Function
+    function CricketScoreboard(props){
+        return (<>
+            <h1 className="scroBoardText">Cricket Scoreboard</h1>
+            <p>Run: {props.run}</p>
+            <p>Wickets: {props.wickets}</p>
+            </>
+        );
+    }
+
+    // Increment Button for all the updates state
+    function IncrementButton(props){
+      return (
+        <button onClick={()=>{props.updateFunc()}}>{props.btnText}</button>
+      );
+    }
+
+    // main App function 
+    function App(){
+      const [runState, updateRun] = React.useState(0);
+      const [wicketsState, updatewickets] = React.useState(0);
+
+      // update function for update the value of runState by 4
+      function updateRunBy4Func(){
+        updateRun(runState+4)
+      }
+      // update function for update the value of runState by 8
+      function updateRunBy8Func(){
+        updateRun(runState+8)
+      }
+      // update function for update the value of runState by 3
+      function updateRunBy3Func(){
+        updateRun(runState+3)
+      }
+
+      // update function for update the value of wicketsState by 1
+      function UpdateWicket(){
+        if(wicketsState<10){
+          updatewickets(wicketsState+1)
+        }
+      }
+
+      return (
+        <div className="displayarea">
+          <div className="buttons">
+        <CricketScoreboard run={runState} wickets={wicketsState}/>
+        <IncrementButton btnText="Increase runs by 4" updateFunc={updateRunBy4Func}/>
+        <IncrementButton btnText="Increase runs by 8" updateFunc={updateRunBy8Func}/>
+        <IncrementButton btnText="Increase runs by 3" updateFunc={updateRunBy3Func}/>
+        <br/>
+        <IncrementButton btnText="Update Wicket" updateFunc={UpdateWicket}/>
+      </div>
+
+        </div>
+      )
+    }
+
+    // creating the root element for react
+    const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+    rootElement.render(<App/>);
+
+  </script>
+</html>
